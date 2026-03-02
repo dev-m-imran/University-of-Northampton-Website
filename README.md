@@ -8,6 +8,7 @@ The project is containerized using Docker for easy setup and deployment.
 Admin Login URL
 
 https://v.je/admin/login.php
+
 Super Admin Credentials
 
 Username: admin
@@ -25,11 +26,12 @@ Open a terminal in the project root folder
 
 Run:
 
-docker compose up
+docker compose up 
 
 Visit the application in your browser.
 
 📌 System Features (Tickets Implemented)
+
 🧑‍💼 NMP-0001: User Accounts
 
 Super Admin can create new admin accounts

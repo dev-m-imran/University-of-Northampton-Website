@@ -1,0 +1,104 @@
+@import url('https://stockfont.org/?0730645e381da6b82adbbf7e32392d1aa97f1a65fe3fac5371847242e86998cc');
+
+* {margin: 0; padding: 0;}
+body {background-color: white; font-family: 'Oxygen-Regular';
+	display: grid;
+  grid-template-columns: 10% 70% 20%;
+    grid-template-rows: auto;
+	grid-template-areas: "header header header"
+	"img img aside"
+	". main aside"
+	"footer footer footer";
+}
+
+body > section {grid-area: img; height: 20vh; background-image: url(/uni.jpg); background-position: center center;}
+header a { color: white; text-decoration: none; }
+
+main {min-height: 20vh; grid-area: main; padding: 5vw; background-color: #eee;}
+header {background-color: black; grid-area: header;}
+
+aside {background-color: #ddd; min-height: 20px; grid-area: aside; padding: 1vw;}
+aside ul {list-style-type: none; margin-bottom: 1em;}
+aside li {padding-left: 20px;}
+aside > ul > li {font-size: 2em;}
+aside > ul > li > ul {font-size: 0.5em;}
+aside a {color: #333; text-decoration: none}
+footer {color: white; padding: 1em; background-color: black; font-size: 0.7em; grid-area: footer;}
+
+header { display: grid;  grid-template-columns: 10% 90%;}
+header ul {align-self: center; display: grid; grid-template-columns: auto auto auto; grid-template-rows: auto; color: white; list-style-type: none;}
+header > ul > li {font-size: 2em; cursor: pointer; text-align: center;}
+header > ul > li {
+  font-size: 2em;
+  cursor: pointer;
+  text-align: center;
+  position: relative; 
+}
+ 
+header ul li ul {
+  margin-left: 7.5vw; 
+  text-align: left;
+  display: none;
+  position: absolute;
+  background-color: #333;
+  padding: 20px;
+  width: 200px; 
+  z-index: 1000; 
+  top: 100%;
+  left: 0; 
+}
+ 
+header ul li ul li {padding: 1vw; white-space: nowrap;} 
+header ul li:hover ul {display: block;}
+
+h1 {font-weight: bold; margin-bottom: 1em;}
+
+p {margin-top: 0.5em; margin-bottom: 0.5em;}
+
+main ul {
+    list-style-type: none;
+}
+
+main ul li {padding: 1em}
+
+main > ul > li:nth-child(odd) {
+    background-color: #ddd
+}
+
+main > ul > li > ul > li:nth-child(odd) {
+    background-color: #fff
+}
+
+main > ul > li > ul > li:nth-child(even) {
+    background-color: #eee
+}
+
+form {
+    display: block;
+    max-width: 40em;
+    width: 100%;
+}
+
+form::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+form input, form select {padding: 1em; box-sizing: border-box;}
+form textarea {height: 15em; padding: 1em; box-sizing: border-box;}
+form input, form label, form select, form textarea {float: left; width: 100%; max-width: 30em; margin: 10px 0;}
+form label {clear: left}
+
+main ul form {
+    display: inline;
+    width: auto;
+}
+
+main ul form input {
+    float: none;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0.3em 0.6em;
+}

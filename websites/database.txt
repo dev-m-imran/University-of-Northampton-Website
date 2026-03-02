@@ -1,0 +1,89 @@
+
+
+
+-- Current Database: 'uon'
+
+CREATE DATABASE  'uon' ;
+
+USE 'uon';
+
+
+-- Table structure for table 'subject_areas'
+CREATE TABLE 'subject_areas' (
+'subject_area_id' int(10) unsigned NOT NULL AUTO_INCREMENT,
+'name' varchar(150) NOT NULL,
+'created_at' datetime NOT NULL DEFAULT current_timestamp(),
+PRIMARY KEY ('subject_area_id'),
+UNIQUE KEY 'uq_subject_areas_name' ('name')
+);
+
+-- Table structure for table 'modules'
+CREATE TABLE 'modules' (
+'module_id' int(10) unsigned NOT NULL AUTO_INCREMENT,
+'module_code' varchar(20) NOT NULL,
+'title' varchar(200) NOT NULL,
+'description' text NOT NULL,
+'created_at' datetime NOT NULL DEFAULT current_timestamp(),
+PRIMARY KEY ('module_id'),
+UNIQUE KEY 'uq_modules_code' ('module_code')
+);
+
+-- Table structure for table 'users'
+CREATE TABLE 'users' (
+'user_id' int(10) unsigned NOT NULL AUTO_INCREMENT,
+'username' varchar(50) NOT NULL,
+'password_hash' varchar(255) NOT NULL,
+'is_superadmin' tinyint(1) NOT NULL DEFAULT 0,
+'created_at' datetime NOT NULL DEFAULT current_timestamp(),
+PRIMARY KEY ('user_id'),
+UNIQUE KEY 'uq_users_username' ('username')
+);
+
+-- Table structure for table 'courses'
+CREATE TABLE 'courses' (
+'course_id' int(10) unsigned NOT NULL AUTO_INCREMENT,
+'subject_area_id' int(10) unsigned NOT NULL,
+'title' varchar(200) NOT NULL,
+'duration_months' smallint(5) unsigned NOT NULL,
+'course_type' varchar(20) NOT NULL,
+'description' text NOT NULL,
+'part_time' tinyint(1) NOT NULL DEFAULT 0,
+'created_at' datetime NOT NULL DEFAULT current_timestamp(),
+'updated_at' datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+PRIMARY KEY ('course_id'),
+KEY 'idx_courses_subject_area' ('subject_area_id'),
+KEY 'idx_courses_type' ('course_type'),
+KEY 'idx_courses_duration' ('duration_months'),
+KEY 'idx_courses_part_time' ('part_time'),
+CONSTRAINT 'fk_courses_subject_area' FOREIGN KEY ('subject_area_id') REFERENCES 'subject_areas' ('subject_area_id') ON UPDATE CASCADE
+);
+
+-- Table structure for table 'course_modules'
+CREATE TABLE 'course_modules' (
+'course_id' int(10) unsigned NOT NULL,
+'module_id' int(10) unsigned NOT NULL,
+PRIMARY KEY ('course_id','module_id'),
+KEY 'idx_course_modules_module' ('module_id'),
+CONSTRAINT 'fk_course_modules_course' FOREIGN KEY ('course_id') REFERENCES 'courses' ('course_id') ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT 'fk_course_modules_module' FOREIGN KEY ('module_id') REFERENCES 'modules' ('module_id') ON UPDATE CASCADE
+);
+
+-- Table structure for table 'enquiries'
+CREATE TABLE 'enquiries' (
+'enquiry_id' int(10) unsigned NOT NULL AUTO_INCREMENT,
+'name' varchar(150) NOT NULL,
+'email' varchar(254) NOT NULL,
+'message' text NOT NULL,
+'created_at' datetime NOT NULL DEFAULT current_timestamp(),
+'responded_at' datetime DEFAULT NULL,
+'responded_by_user_id' int(10) unsigned DEFAULT NULL,
+'phone' varchar(50) DEFAULT NULL,
+'course_id' int(10) unsigned NOT NULL,
+PRIMARY KEY ('enquiry_id'),
+KEY 'idx_enquiries_created_at' ('created_at'),
+KEY 'idx_enquiries_responded_at' ('responded_at'),
+KEY 'idx_enquiries_responded_by' ('responded_by_user_id'),
+KEY 'fk_enquiries_course' ('course_id'),
+CONSTRAINT 'fk_enquiries_course' FOREIGN KEY ('course_id') REFERENCES 'courses' ('course_id') ON UPDATE CASCADE,
+CONSTRAINT 'fk_enquiries_responded_by' FOREIGN KEY ('responded_by_user_id') REFERENCES 'users' ('user_id') ON DELETE SET NULL ON UPDATE CASCADE
+);
